@@ -1,8 +1,7 @@
 import React from 'react';
-import Icon from '../images/Emblem_Gold.png';
+import RankedCard from './RankedCard';
 
 const ResultsPage = ({ summonerInfo, rankedInfo, masteryInfo }) => {
-  
   return (
     <div className="bg-gray-200">
       <div className="pt-10 sm:ml-4 md:ml-32">
@@ -16,24 +15,8 @@ const ResultsPage = ({ summonerInfo, rankedInfo, masteryInfo }) => {
       </div>
       <div class="grid grid-cols-3">
         <div className="col-span-3 md:col-span-1 mt-10 sm:ml-2 md:ml-24">
-          {rankedInfo.length > 0 && <div className="rounded bg-gray-100 border border-gray-900 mb-2 flex">
-            <img className="h-40" alt="rank icon" src={Icon} />
-            <div className="ml-4 self-center">
-              <p>{rankedInfo[0].queueType}</p>
-              <p>{rankedInfo[0].tier} {rankedInfo[0].rank}</p>
-              <p>{rankedInfo[0].leaguePoints} LP</p>
-              <p>{rankedInfo[0].wins} W {rankedInfo[0].losses} L</p>
-            </div>
-          </div>}
-          {rankedInfo.length > 1 && <div className="rounded bg-gray-100 border border-gray-900 flex">
-            <img className="h-40 object-contain" alt="rank icon" src={Icon} />
-            <div className="ml-4 self-center">
-              <p>{rankedInfo[1].queueType}</p>
-              <p>{rankedInfo[1].tier} {rankedInfo[1].rank}</p>
-              <p>{rankedInfo[1].leaguePoints} LP</p>
-              <p>{rankedInfo[1].wins} W {rankedInfo[1].losses} L</p>
-            </div>
-          </div>}
+          {rankedInfo.length > 0 && <RankedCard queueType={rankedInfo[0].queueType} tier={rankedInfo[0].tier} rank={rankedInfo[0].rank} lp={rankedInfo[0].leaguePoints} wins={rankedInfo[0].wins} losses={rankedInfo[0].losses} />}
+          {rankedInfo.length > 1 && <RankedCard queueType={rankedInfo[1].queueType} tier={rankedInfo[1].tier} rank={rankedInfo[1].rank} lp={rankedInfo[1].leaguePoints} wins={rankedInfo[1].wins} losses={rankedInfo[1].losses} />}
         </div>
       </div>
     </div>
