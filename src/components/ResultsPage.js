@@ -1,5 +1,12 @@
 import React from 'react';
 import RankedCard from './RankedCard';
+import MasteryCard from './MasteryCard';
+
+import { PATCH_VERSION } from './MainPage';
+import { idToChampKeyMap } from '../data/championIds.js';
+import { idToChampNameMap } from '../data/championIds.js';
+
+const CHAMPION_PIC_URL = `https://ddragon.leagueoflegends.com/cdn/${PATCH_VERSION}/img/champion/`;
 
 const ResultsPage = ({ summonerInfo, rankedInfo, masteryInfo }) => {
   return (
@@ -13,10 +20,16 @@ const ResultsPage = ({ summonerInfo, rankedInfo, masteryInfo }) => {
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-3">
+      <div className="grid grid-cols-3">
         <div className="col-span-3 md:col-span-1 mt-10 sm:ml-2 md:ml-24">
-          {rankedInfo.length > 0 && <RankedCard queueType={rankedInfo[0].queueType} tier={rankedInfo[0].tier} rank={rankedInfo[0].rank} lp={rankedInfo[0].leaguePoints} wins={rankedInfo[0].wins} losses={rankedInfo[0].losses} />}
-          {rankedInfo.length > 1 && <RankedCard queueType={rankedInfo[1].queueType} tier={rankedInfo[1].tier} rank={rankedInfo[1].rank} lp={rankedInfo[1].leaguePoints} wins={rankedInfo[1].wins} losses={rankedInfo[1].losses} />}
+          {rankedInfo.length > 0 && <RankedCard rankedInfo={rankedInfo[0]} />}
+          {rankedInfo.length > 1 && <RankedCard rankedInfo={rankedInfo[1]} />}
+        </div>
+        <div className="col-span-3 md:col-span-2 mt-10">
+          <p className="text-center text-3xl">Most Played Champions</p>
+          <div className="flex justify-evenly">
+            {masteryInfo.map(championMastery => <MasteryCard key={championMastery.championId} masteryInfo={championMastery} url={CHAMPION_PIC_URL} idToChampKeyMap={idToChampKeyMap} idToChampNameMap={idToChampNameMap} />)}
+          </div>
         </div>
       </div>
     </div>

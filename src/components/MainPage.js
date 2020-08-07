@@ -6,7 +6,7 @@ const background = {
   backgroundImage: `url(${Background})`
 };
 
-const PATCH_VERSION = 10.16;
+export const PATCH_VERSION = '10.16.1';
 
 const MainPage = ({ onFormSubmit }) => {
   return (

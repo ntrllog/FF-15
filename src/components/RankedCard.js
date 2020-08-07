@@ -22,15 +22,17 @@ const rankedIcon = {
   "CHALLENGER": CHALLENGER,
 };
 
-const RankedCard = ({ queueType, tier, rank, lp, wins, losses }) => {
+const RankedCard = ({ rankedInfo }) => {
   return (
-    <div className="rounded bg-gray-100 border border-gray-900 mb-2 flex">
-      <img className="h-40" alt="rank icon" src={rankedIcon[tier]} />
-      <div className="ml-4 self-center">
-        <p>{queueType}</p>
-        <p>{tier} {rank}</p>
-        <p>{lp} LP</p>
-        <p>{wins} W {losses} L</p>
+    <div className="rounded bg-gray-100 border border-gray-900 mb-2 flex justify-center">
+      <div>
+        <img className="h-40" alt="rank icon" src={rankedIcon[rankedInfo.tier]} />
+        <div className="ml-4 self-center">
+          <p>{rankedInfo.queueType}</p>
+          <p>{rankedInfo.tier} {rankedInfo.rank}</p>
+          <p>{rankedInfo.leaguePoints} LP</p>
+          <p>{rankedInfo.wins} W {rankedInfo.losses} L</p>
+        </div>
       </div>
     </div>
   );
