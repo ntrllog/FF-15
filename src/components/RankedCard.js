@@ -13,6 +13,7 @@ import CHALLENGER from '../images/Emblem_Challenger.png';
 const rankedIcon = {
   "IRON": IRON,
   "BRONZE": BRONZE,
+  "SILVER": SILVER,
   "GOLD": GOLD,
   "PLATINUM": PLATINUM,
   "DIAMOND": DIAMOND,
