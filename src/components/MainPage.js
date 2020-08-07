@@ -17,6 +17,7 @@ const MainPage = ({ onFormSubmit }) => {
         <p className="text-white text-center">Patch: { PATCH_VERSION }</p>
         <Search onFormSubmit={onFormSubmit} />
         <p className="text-white text-center">To test it out, use my summoner name: Big Tastÿ</p>
+        <p className="text-white text-center">(Currently a work in progress)</p>
       </div>
     </div>
   );
