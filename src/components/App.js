@@ -87,13 +87,20 @@ const App = () => {
   };
   
   const onFormSubmit = async name => {
-    const summonerRes = await getSummonerInfo(name);
-    setSummonerInfo({ name: summonerRes.name, level: summonerRes.summonerLevel, icon: `${PROFILE_ICON_URL}${summonerRes.profileIconId.toString()}.png` });
-    const rankedRes = await getRankedInfo(summonerRes.id);
-    setRankedInfo(rankedRes);
-    const masteryRes = await getMasteryInfo(summonerRes.id);
-    setMasteryInfo(masteryRes);
-    setShowResults(true);
+    if (name) {
+      try {
+        const summonerRes = await getSummonerInfo(name);
+        setSummonerInfo({ name: summonerRes.name, level: summonerRes.summonerLevel, icon: `${PROFILE_ICON_URL}${summonerRes.profileIconId.toString()}.png` });
+        const rankedRes = await getRankedInfo(summonerRes.id);
+        setRankedInfo(rankedRes);
+        const masteryRes = await getMasteryInfo(summonerRes.id);
+        setMasteryInfo(masteryRes);
+        setShowResults(true);
+      }
+      catch (err) {
+        alert(err.response.data.status.message);
+      }
+    }    
   };
   
   return (

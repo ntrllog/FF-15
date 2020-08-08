@@ -9,10 +9,9 @@ const Search = ({ onFormSubmit }) => {
   };
   
   return (
-    <form onSubmit={onSubmit}>
-      <div className="flex justify-around">
-        <input onChange={ event => setName(event.target.value) } value={ name } className="rounded w-full my-2 py-2 px-3 focus:outline-none focus:shadow-outline" type="text" placeholder="Enter summoner name"/>
-      </div>
+    <form className="bg-white flex px-2 mt-2" onSubmit={onSubmit}>
+      <input onChange={ event => setName(event.target.value) } value={ name } className="w-full rounded my-2 px-3 focus:outline-none" type="text" placeholder="Enter summoner name"/>
+      <button onClick={onSubmit} className="px-2 bg-blue-500 self-center focus:outline-none">Search</button>
     </form>
   );
 };
