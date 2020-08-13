@@ -81,7 +81,12 @@ const App = () => {
         setShowResults(true);
       }
       catch (err) {
-        alert(err.response.data.status.message);
+        if (err.response) {
+          alert(err.response.data.status.message);
+        }
+        else {
+          alert('Most likely too many requests have been made. Try again in an hour.')
+        }
       }
     }    
   };
