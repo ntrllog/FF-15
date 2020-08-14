@@ -6,7 +6,7 @@ import MatchCard from './MatchCard';
 import { PATCH_VERSION } from './App';
 import { champNameMap, champKeyMap } from '../data/gameData.js';
 
-const ResultsPage = ({ summonerInfo, rankedInfo, masteryInfo, matchesInfo }) => {
+const ResultsPage = ({ summonerInfo, rankedInfo, masteryInfo, matchesInfo, setSearching }) => {
   const CHAMPION_PIC_URL = `https://ddragon.leagueoflegends.com/cdn/${PATCH_VERSION}/img/champion/`;
   
   return (
@@ -31,7 +31,7 @@ const ResultsPage = ({ summonerInfo, rankedInfo, masteryInfo, matchesInfo }) => 
             {masteryInfo.map(championMastery => <MasteryCard key={championMastery.championId} masteryInfo={championMastery} champPicUrl={CHAMPION_PIC_URL} champNameMap={champNameMap} champKeyMap={champKeyMap} />)}
           </div>
           <div>
-            {matchesInfo.map(match => <MatchCard key={match.gameId} match={match} champPicUrl={CHAMPION_PIC_URL} champNameMap={champNameMap} champKeyMap={champKeyMap} summonerName={summonerInfo.name} />)}
+            {matchesInfo.map(match => <MatchCard key={match.gameId} match={match} champPicUrl={CHAMPION_PIC_URL} champNameMap={champNameMap} champKeyMap={champKeyMap} summonerName={summonerInfo.name} setSearching={setSearching} />)}
           </div>
         </div>
       </div>

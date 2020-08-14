@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import MainPage from './MainPage';
 import ResultsPage from './ResultsPage';
@@ -9,6 +9,7 @@ export const PATCH_VERSION = '10.16.1';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const CORS_URL = 'https://cors-anywhere.herokuapp.com/';
+// const CORS_URL = '';
 const SUMMONER_URL = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/';
 const PROFILE_ICON_URL = 'http://ddragon.leagueoflegends.com/cdn/10.16.1/img/profileicon/';
 const RANKED_URL = 'https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/';
@@ -21,6 +22,9 @@ const App = () => {
   const [masteryInfo, setMasteryInfo] = useState([]);
   const [matchesInfo, setMatchesInfo] = useState([]);
   const [showResults, setShowResults] = useState(false);
+  const [searching, setSearching] = useState(false);
+  
+  const ref = useRef();
   
   const getSummonerInfo = async name => {
     const res = await axios.get(`${CORS_URL}${SUMMONER_URL}${name}`, {
@@ -70,6 +74,7 @@ const App = () => {
   const onFormSubmit = async name => {
     if (name) {
       try {
+        setSearching(true);
         const summonerRes = await getSummonerInfo(name);
         setSummonerInfo({ name: summonerRes.name, level: summonerRes.summonerLevel, icon: `${PROFILE_ICON_URL}${summonerRes.profileIconId.toString()}.png` });
         const rankedRes = await getRankedInfo(summonerRes.id);
@@ -79,23 +84,26 @@ const App = () => {
         const matchesRes = await getMatchesInfo(summonerRes.accountId);
         setMatchesInfo(matchesRes);
         setShowResults(true);
+        setSearching(false);
+        ref.current.scrollIntoView({ behavior: 'smooth' });
       }
       catch (err) {
-        if (err.response) {
+        if (err.response.data.status) {
           alert(err.response.data.status.message);
         }
         else {
-          alert('Most likely too many requests have been made. Try again in an hour.')
+          alert(err);
         }
+        setSearching(false);
       }
     }    
   };
   
   return (
-    <div className="font-mono">
-      <MainPage showResults={showResults} onFormSubmit={onFormSubmit} />
-      <div className="">
-        {showResults === true ? <ResultsPage summonerInfo={summonerInfo} rankedInfo={rankedInfo} masteryInfo={masteryInfo} matchesInfo={matchesInfo} /> : <div></div>}
+    <div className="ui">
+      <MainPage showResults={showResults} searching={searching} onFormSubmit={onFormSubmit} />
+      <div ref={ref}>
+        {showResults === true ? <ResultsPage summonerInfo={summonerInfo} rankedInfo={rankedInfo} masteryInfo={masteryInfo} matchesInfo={matchesInfo} setSearching={setSearching} /> : <div></div>}
       </div>
     </div>
   );
