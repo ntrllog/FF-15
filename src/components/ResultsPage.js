@@ -30,7 +30,7 @@ const ResultsPage = ({ summonerInfo, rankedInfo, masteryInfo, matchesInfo, setSe
           <div className="flex justify-evenly">
             {masteryInfo.map(championMastery => <MasteryCard key={championMastery.championId} masteryInfo={championMastery} champPicUrl={CHAMPION_PIC_URL} champNameMap={champNameMap} champKeyMap={champKeyMap} />)}
           </div>
-          <div>
+          <div className="mt-4">
             {matchesInfo.map(match => <MatchCard key={match.gameId} match={match} champPicUrl={CHAMPION_PIC_URL} champNameMap={champNameMap} champKeyMap={champKeyMap} summonerName={summonerInfo.name} setSearching={setSearching} />)}
           </div>
         </div>

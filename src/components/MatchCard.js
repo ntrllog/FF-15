@@ -6,8 +6,8 @@ import MatchObjTable from './MatchObjTable';
 import { summonerSpellMap, runePathMap, keystoneMap, itemMap } from '../data/gameData.js';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
-const CORS_URL = 'https://cors-anywhere.herokuapp.com/';
-// const CORS_URL = '';
+// const CORS_URL = 'https://cors-anywhere.herokuapp.com/';
+const CORS_URL = '';
 const QUEUE_TYPE_URL = 'https://static.developer.riotgames.com/docs/lol/queues.json';
 const MATCH_URL = 'https://na1.api.riotgames.com/lol/match/v4/matches/';
 
@@ -66,18 +66,17 @@ const MatchCard = ({ match, champPicUrl, champNameMap, champKeyMap, summonerName
     const res = await axios.get(QUEUE_TYPE_URL);
     setMatchType(binarySearch(queueId, res.data));
   };
-  
-  
+
   const getMatchResponse = async matchId => {
     const res = await axios.get(`${CORS_URL}${MATCH_URL}${matchId}`, {
       params: {
         api_key: API_KEY,
       },
     });
-    
+
     return res.data;
   };
-  
+
   const getParticipantId = async matchRes => {
     for (let i = 0; i < matchRes.participantIdentities.length; i++) {
       let participant = matchRes.participantIdentities[i];
@@ -86,7 +85,7 @@ const MatchCard = ({ match, champPicUrl, champNameMap, champKeyMap, summonerName
       }
     }
   };
-  
+
   const getStats = async (matchRes, participantId) => {
     let statsArray = [];
     let playerIndex = 0;
@@ -112,12 +111,13 @@ const MatchCard = ({ match, champPicUrl, champNameMap, champKeyMap, summonerName
       dragons: matchRes.teams[1].dragonKills,
       heralds: matchRes.teams[1].riftHeraldKills,
     };
-    
+
     for (let i = 0; i < matchRes.participants.length; i++) {
       let participant = matchRes.participants[i];
       statsArray.push({
         champion: participant.championId,
         participantId: participant.participantId,
+        teamId: participant.teamId,
         summonerName: matchRes.participantIdentities[i].player.summonerName,
         summonerId: matchRes.participantIdentities[i].player.summonerId,
         win: participant.stats.win,
@@ -125,10 +125,17 @@ const MatchCard = ({ match, champPicUrl, champNameMap, champKeyMap, summonerName
         spell2: participant.spell2Id,
         rune1: participant.stats.perk0,
         rune2: participant.stats.perkSubStyle,
+        kills: participant.stats.kills,
+        assists: participant.stats.assists,
         kda: `${participant.stats.kills} / ${participant.stats.deaths} / ${participant.stats.assists}`,
-        kdaRatio: participant.stats.deaths === 0 ? 'Perfect KDA' : `${((participant.stats.kills + participant.stats.assists)/participant.stats.deaths).toFixed(2)}:1 KDA`,
+        kdaRatio: participant.stats.deaths === 0 ? matchRes.gameDuration < 240 ? `${(participant.stats.kills + participant.stats.assists).toFixed(2)}:1 KDA` : 'Perfect KDA' : `${((participant.stats.kills + participant.stats.assists)/participant.stats.deaths).toFixed(2)}:1 KDA`,
+        doubleKills: participant.stats.doubleKills,
+        tripleKills: participant.stats.tripleKills,
+        quadraKills: participant.stats.quadraKills,
+        pentaKills: participant.stats.pentaKills,
         damage: participant.stats.totalDamageDealtToChampions,
         damageString: participant.stats.totalDamageDealtToChampions.toLocaleString(),
+        level: participant.stats.champLevel,
         wards: participant.stats.wardsPlaced,
         item1: participant.stats.item0,
         item2: participant.stats.item1,
@@ -142,7 +149,7 @@ const MatchCard = ({ match, champPicUrl, champNameMap, champKeyMap, summonerName
       if (participant.participantId === participantId) {
         playerIndex = i;
       }
-      if (i < 5) {
+      if (participant.teamId === 100) {
         if (participant.stats.totalDamageDealtToChampions > blueTeam.maxDamage) {
           blueTeam.maxDamage = participant.stats.totalDamageDealtToChampions;
         }
@@ -159,9 +166,9 @@ const MatchCard = ({ match, champPicUrl, champNameMap, champKeyMap, summonerName
         redTeam.totalKills += participant.stats.kills;
       }
     }
-    return [statsArray, playerIndex, blueTeam, redTeam];
+    return [statsArray, playerIndex, {...blueTeam, totalDamageString: blueTeam.totalDamage.toLocaleString(), totalGoldString: blueTeam.totalGold.toLocaleString()}, {...redTeam, totalDamageString: redTeam.totalDamage.toLocaleString(), totalGoldString: redTeam.totalGold.toLocaleString()}];
   }
-  
+
   const getMatchInfo = async () => {
     try {
       getMatchType(match.queue);
@@ -189,13 +196,13 @@ const MatchCard = ({ match, champPicUrl, champNameMap, champKeyMap, summonerName
       setSearching(false);
     }
   };
-  
+
   return (
     <div className={`${gameDuration < 240 ? 'bg-gray-300' : playerStats.win ? 'bg-blue-300' : 'bg-red-300'} mb-2 py-2 border border-gray-600 ui accordion`}>
       <div onClick={onMatchCardClick} className={`flex flex-wrap justify-around items-center ${displayDetailedStats ? 'active' : ''} title`}>
         <div className="text-center ml-2">
-          <p>{matchType}</p>
-          <p>{gameDuration < 240 ? 'Remake' : playerStats.win ? 'Victory' : 'Defeat'}</p>
+          <p className="font-bold">{matchType}</p>
+          <p className={playerStats.win ? 'text-blue-700' : 'text-red-700'}>{gameDuration < 240 ? 'Remake' : playerStats.win ? 'Victory' : 'Defeat'}</p>
           <p>{Math.round(gameDuration / 60)} mins</p>
         </div>
         <div>
@@ -213,8 +220,10 @@ const MatchCard = ({ match, champPicUrl, champNameMap, champKeyMap, summonerName
           <p className="ml-2">{champNameMap[match.champion]}</p>
         </div>
         <div className="text-center ml-2">
-          <p>{playerStats.kda}</p>
-          <p>{gameDuration < 240 && playerStats.kdaRatio === 'Perfect KDA' ? '0.00:1 KDA' : playerStats.kdaRatio}</p>
+          <p className="font-bold text-lg">{playerStats.kda}</p>
+          <p>{playerStats.kdaRatio}</p>
+          <p className="text-red-700">{playerStats.teamId === 100 ? Math.round((playerStats.kills + playerStats.assists) / blueTeamStats.totalKills * 100) : Math.round((playerStats.kills + playerStats.assists) / redTeamStats.totalKills * 100)}% KP</p>
+          {playerStats.pentaKills > 0 ? <p className="bg-red-500 rounded-full py-1 px-4 text-white">Penta Kill</p> : playerStats.quadraKills > 0 ? <p className="bg-red-500 rounded-full py-1 px-4 text-white">Quadra Kill</p> : playerStats.tripleKills > 0 ? <p className="bg-red-500 rounded-full py-1 px-4 text-white">Triple Kill</p> : playerStats.doubleKills ? <p className="bg-red-500 rounded-full py-1 px-4 text-white">Double Kill</p> : <span></span>}
         </div>
         <div className="flex items-center ml-2">
           <div className="grid grid-cols-3">

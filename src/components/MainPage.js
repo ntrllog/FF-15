@@ -17,7 +17,6 @@ const MainPage = ({ searching, onFormSubmit }) => {
         <p>Patch: {PATCH_VERSION}</p>
         <Search onFormSubmit={onFormSubmit} />
         <p>To test it out, use my summoner name: Big Tastÿ</p>
-        <p>(Currently a work in progress)</p>
         <div className={`ui ${searching === true ? 'active' : ''} inline loader`}></div>
       </div>
     </div>

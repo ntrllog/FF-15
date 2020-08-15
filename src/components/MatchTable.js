@@ -1,8 +1,9 @@
 import React from 'react';
+import { Line } from 'rc-progress';
 
 const MatchTable = ({ team, teamStats, player1Stats, player2Stats, player3Stats, player4Stats, player5Stats, champPicUrl, champKeyMap, summonerSpellMap, keystoneMap, runePathMap, itemMap }) => {
   return (
-    <table className="ui unstackable table">
+    <table className="ui celled unstackable table">
       <thead>
         <tr>
           <th>{team}</th>
@@ -14,7 +15,7 @@ const MatchTable = ({ team, teamStats, player1Stats, player2Stats, player3Stats,
       </thead>
       <tbody>
         <tr>
-          <td data-label="Blue Team">
+          <td data-label={team}>
             <div className="flex flex-wrap items-center py-2">
               <img className="h-16" alt="champ icon" src={`${champPicUrl}${champKeyMap[player1Stats.champion]}.png`} />
               <div className="ml-2">
@@ -36,7 +37,7 @@ const MatchTable = ({ team, teamStats, player1Stats, player2Stats, player3Stats,
           </td>
           <td data-label="Damage">
             <p>{player1Stats.damageString}</p>
-            <progress value={`${player1Stats.damage}`} max={`${teamStats.maxDamage}`}></progress>
+            <Line percent={`${player1Stats.damage/teamStats.maxDamage*100}`} strokeWidth="5" strokeColor={team === 'Blue Team' ? "#3182CE" : "#E53E3E"} />
           </td>
           <td data-label="CS">{player1Stats.cs}</td>
           <td data-label="Items">
@@ -46,7 +47,7 @@ const MatchTable = ({ team, teamStats, player1Stats, player2Stats, player3Stats,
           </td>
         </tr>
         <tr>
-          <td data-label="Blue Team">
+          <td data-label={team}>
             <div className="flex flex-wrap items-center py-2">
               <img className="h-16" alt="champ icon" src={`${champPicUrl}${champKeyMap[player2Stats.champion]}.png`} />
               <div className="ml-2">
@@ -68,7 +69,7 @@ const MatchTable = ({ team, teamStats, player1Stats, player2Stats, player3Stats,
           </td>
           <td data-label="Damage">
             <p>{player2Stats.damageString}</p>
-            <progress value={`${player2Stats.damage}`} max={`${teamStats.maxDamage}`}></progress>
+            <Line percent={`${player2Stats.damage/teamStats.maxDamage*100}`} strokeWidth="5" strokeColor={team === 'Blue Team' ? "#3182CE" : "#E53E3E"} />
           </td>
           <td data-label="CS">{player2Stats.cs}</td>
           <td data-label="Items">
@@ -78,7 +79,7 @@ const MatchTable = ({ team, teamStats, player1Stats, player2Stats, player3Stats,
           </td>
         </tr>
         <tr>
-          <td data-label="Blue Team">
+          <td data-label={team}>
             <div className="flex flex-wrap items-center py-2">
               <img className="h-16" alt="champ icon" src={`${champPicUrl}${champKeyMap[player3Stats.champion]}.png`} />
               <div className="ml-2">
@@ -100,7 +101,7 @@ const MatchTable = ({ team, teamStats, player1Stats, player2Stats, player3Stats,
           </td>
           <td data-label="Damage">
             <p>{player3Stats.damageString}</p>
-            <progress value={`${player3Stats.damage}`} max={`${teamStats.maxDamage}`}></progress>
+            <Line percent={`${player3Stats.damage/teamStats.maxDamage*100}`} strokeWidth="5" strokeColor={team === 'Blue Team' ? "#3182CE" : "#E53E3E"} />
           </td>
           <td data-label="CS">{player3Stats.cs}</td>
           <td data-label="Items">
@@ -110,7 +111,7 @@ const MatchTable = ({ team, teamStats, player1Stats, player2Stats, player3Stats,
           </td>
         </tr>
         <tr>
-          <td data-label="Blue Team">
+          <td data-label={team}>
             <div className="flex flex-wrap items-center py-2">
               <img className="h-16" alt="champ icon" src={`${champPicUrl}${champKeyMap[player4Stats.champion]}.png`} />
               <div className="ml-2">
@@ -132,7 +133,7 @@ const MatchTable = ({ team, teamStats, player1Stats, player2Stats, player3Stats,
           </td>
           <td data-label="Damage">
             <p>{player4Stats.damageString}</p>
-            <progress value={`${player4Stats.damage}`} max={`${teamStats.maxDamage}`}></progress>
+            <Line percent={`${player4Stats.damage/teamStats.maxDamage*100}`} strokeWidth="5" strokeColor={team === 'Blue Team' ? "#3182CE" : "#E53E3E"} />
           </td>
           <td data-label="CS">{player4Stats.cs}</td>
           <td data-label="Items">
@@ -142,7 +143,7 @@ const MatchTable = ({ team, teamStats, player1Stats, player2Stats, player3Stats,
           </td>
         </tr>
         <tr>
-          <td data-label="Blue Team">
+          <td data-label={team}>
             <div className="flex flex-wrap items-center py-2">
               <img className="h-16" alt="champ icon" src={`${champPicUrl}${champKeyMap[player5Stats.champion]}.png`} />
               <div className="ml-2">
@@ -164,7 +165,7 @@ const MatchTable = ({ team, teamStats, player1Stats, player2Stats, player3Stats,
           </td>
           <td data-label="Damage">
             <p>{player5Stats.damageString}</p>
-            <progress value={`${player5Stats.damage}`} max={`${teamStats.maxDamage}`}></progress>
+            <Line percent={`${player5Stats.damage/teamStats.maxDamage*100}`} strokeWidth="5" strokeColor={team === 'Blue Team' ? "#3182CE" : "#E53E3E"} />
           </td>
           <td data-label="CS">{player5Stats.cs}</td>
           <td data-label="Items">
