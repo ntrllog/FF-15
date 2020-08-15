@@ -1,7 +1,8 @@
 import React from 'react';
-import { PATCH_VERSION } from './App';
 import Search from './Search';
 import Background from '../images/champion-lillia-spirit-blossom-splash.jpg';
+
+import { PATCH_VERSION } from './App';
 
 const background = {
   backgroundImage: `url(${Background})`
