@@ -23,7 +23,7 @@ const MainPage = ({ searching, onFormSubmit }) => {
         <p className="text-xl">League of Legends player profile information</p>
         <p>Patch: {PATCH_VERSION}</p>
         <Search onFormSubmit={onFormSubmit} />
-        <p>To test it out, use my summoner name: <button className="bg-gray-300 text-black p-1" ref={ref} onClick={highlightText} >Big Tastÿ</button></p>
+        <p>To test it out, use my summoner name: <span className="cursor-pointer" ref={ref} onClick={highlightText} >Big Tastÿ</span></p>
         <div className={`ui ${searching === true ? 'active' : ''} inline loader`}></div>
       </div>
     </div>
