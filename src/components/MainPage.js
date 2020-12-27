@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Search from './Search';
-import Background from '../images/champion-lillia-spirit-blossom-splash.jpg';
+import Background from '../images/Rell_0.jpg';
 
 import { PATCH_VERSION } from './App';
 

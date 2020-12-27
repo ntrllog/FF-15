@@ -5,13 +5,13 @@ import ResultsPage from './ResultsPage';
 
 require('dotenv').config();
 
-export const PATCH_VERSION = '10.16.1';
+export const PATCH_VERSION = '10.25.1';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const CORS_URL = 'https://cors-anywhere.herokuapp.com/';
-// const CORS_URL = '';
+//const CORS_URL = '';
 const SUMMONER_URL = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/';
-const PROFILE_ICON_URL = 'https://ddragon.leagueoflegends.com/cdn/10.16.1/img/profileicon/';
+const PROFILE_ICON_URL = `https://ddragon.leagueoflegends.com/cdn/${PATCH_VERSION}/img/profileicon/`;
 const RANKED_URL = 'https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/';
 const MASTERY_URL = 'https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/';
 const MATCHES_URL = 'https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/';
@@ -88,12 +88,15 @@ const App = () => {
         ref.current.scrollIntoView({ behavior: 'smooth' });
       }
       catch (err) {
+        /*
         if (err.response.data.status) {
           alert(err.response.data.status.message);
         }
         else {
           alert(err);
         }
+        */
+        alert(err);
         setSearching(false);
       }
     }    

@@ -15,3 +15,7 @@ https://ff-15.netlify.app
 ## Resources
 https://stackoverflow.com/questions/43462367/how-to-overcome-the-cors-issue-in-reactjs  
 https://stackoverflow.com/questions/39153080/how-can-i-get-the-status-code-from-an-http-error-in-axios
+
+## Personal Notes
+- Don't use cors-anywhere for local testing, use cors extension (App and MatchCard)
+- Remove all double quotes from itemMap (except Cho'Gath, Kai'Sa, Kha'Zix, Kog'Maw, Rek'Sai, Vel'Koz)
