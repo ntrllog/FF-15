@@ -5,9 +5,10 @@ import ResultsPage from './ResultsPage';
 
 require('dotenv').config();
 
-export const PATCH_VERSION = '10.25.1';
+export const PATCH_VERSION = '11.2.1';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
+//const API_KEY = '';
 const CORS_URL = 'https://cors-anywhere.herokuapp.com/';
 //const CORS_URL = '';
 const SUMMONER_URL = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/';
@@ -96,7 +97,7 @@ const App = () => {
           alert(err);
         }
         */
-        alert(err);
+        alert('App: ' + err);
         setSearching(false);
       }
     }    

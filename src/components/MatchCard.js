@@ -6,6 +6,7 @@ import MatchObjTable from './MatchObjTable';
 import { summonerSpellMap, runePathMap, keystoneMap, itemMap } from '../data/gameData.js';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
+//const API_KEY = '';
 const CORS_URL = 'https://cors-anywhere.herokuapp.com/';
 //const CORS_URL = '';
 const QUEUE_TYPE_URL = 'https://static.developer.riotgames.com/docs/lol/queues.json';
@@ -188,10 +189,10 @@ const MatchCard = ({ match, champPicUrl, champNameMap, champKeyMap, summonerName
     }
     catch (err) {
       if (err.response.data.status) {
-        alert(err.response.data.status.message);
+        alert('MatchCard: ' + err.response.data.status.message);
       }
       else {
-        alert(err);
+        alert('MatchCard: ' + err);
       }
       setSearching(false);
     }
