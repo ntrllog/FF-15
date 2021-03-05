@@ -7,8 +7,8 @@ import { summonerSpellMap, runePathMap, keystoneMap, itemMap } from '../data/gam
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 //const API_KEY = '';
-//const CORS_URL = 'https://cors-anywhere.herokuapp.com/';
-const CORS_URL = '';
+const CORS_URL = 'https://cors-anywhere.herokuapp.com/';
+//const CORS_URL = '';
 const QUEUE_TYPE_URL = 'https://static.developer.riotgames.com/docs/lol/queues.json';
 const MATCH_URL = 'https://na1.api.riotgames.com/lol/match/v4/matches/';
 
