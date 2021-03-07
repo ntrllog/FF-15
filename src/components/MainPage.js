@@ -24,6 +24,8 @@ const MainPage = ({ searching, onFormSubmit }) => {
         <p>Patch: {PATCH_VERSION}</p>
         <Search onFormSubmit={onFormSubmit} />
         <p>To test it out, use my summoner name: <span className="cursor-pointer" ref={ref} onClick={highlightText} >Big Tastÿ</span></p>
+        <p>Note: This application is limited to 100 network requests every 2 minutes.</p>
+        <p>One successful search makes 19 network requests.</p>
         <div className={`ui ${searching === true ? 'active' : ''} inline loader`}></div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import ResultsPage from './ResultsPage';
 
 require('dotenv').config();
 
-export const PATCH_VERSION = '11.2.1';
+export const PATCH_VERSION = '11.5.1';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 //const API_KEY = '';
@@ -24,26 +24,26 @@ const App = () => {
   const [matchesInfo, setMatchesInfo] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [searching, setSearching] = useState(false);
-  
+
   const ref = useRef();
-  
+
   const getSummonerInfo = async name => {
     const res = await axios.get(`${CORS_URL}${SUMMONER_URL}${name}`, {
       params: {
         api_key: API_KEY,
       },
     });
-    
+ 
     return res.data;
   };
-  
+
   const getRankedInfo = async id => {
     const res = await axios.get(`${CORS_URL}${RANKED_URL}${id}`, {
       params: {
         api_key: API_KEY,
       },
     });
-    
+ 
     if (res.data.length === 2) {
       if (res.data[0].queueType === 'RANKED_FLEX_SR') {
         return [res.data[1], res.data[0]];
@@ -52,7 +52,7 @@ const App = () => {
 
     return res.data;
   }; 
-  
+
   const getMasteryInfo = async id => {
     const res = await axios.get(`${CORS_URL}${MASTERY_URL}${id}`, {
       params: {
@@ -62,7 +62,7 @@ const App = () => {
 
     return res.data.slice(0, 3);
   };
-  
+
   const getMatchesInfo = async id => {
     const res = await axios.get(`${CORS_URL}${MATCHES_URL}${id}`, {
       params: {
@@ -71,7 +71,7 @@ const App = () => {
     });
     return res.data.matches.slice(0, 15);
   };
-  
+
   const onFormSubmit = async name => {
     if (name) {
       try {
@@ -89,20 +89,17 @@ const App = () => {
         ref.current.scrollIntoView({ behavior: 'smooth' });
       }
       catch (err) {
-        /*
-        if (err.response.data.status) {
+        if (err.response && err.response.data.status) {
           alert(err.response.data.status.message);
         }
         else {
           alert(err);
         }
-        */
-        alert('App: ' + err);
         setSearching(false);
       }
-    }    
+    }
   };
-  
+
   return (
     <div className="ui">
       <MainPage showResults={showResults} searching={searching} onFormSubmit={onFormSubmit} />
