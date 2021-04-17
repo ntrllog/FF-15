@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Search from './Search';
-import Background from '../images/Viego_0.jpg';
+import Background from '../images/Gwen_0.jpg';
 
 import { PATCH_VERSION } from './App';
 
